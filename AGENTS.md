@@ -22,13 +22,16 @@ This repository uses a **branch-per-iteration** workflow:
 ## Branch Rules
 
 1. `main` is the stable baseline. **Never commit directly to `main`.**
-2. Create a new branch for each unit of work with the naming pattern
-   `feature/<short-description>` (e.g. `feature/fix-cart-increment`,
-   `feature/rupee-currency`, `feature/pending-payment-orders`).
-3. **One branch per iteration.** When doing new work later, create a NEW branch; do
-   not reuse an old branch.
-4. **Never delete branches.** Every branch is kept so any iteration can be recovered.
-5. Never force-push and never rewrite history on `main` or shared branches.
+2. Every time a new feature is introduced or worked on, a NEW branch is created for it
+   with the naming pattern `feature/<short-description>` (e.g.
+   `feature/fix-cart-increment`, `feature/rupee-currency`,
+   `feature/pending-payment-orders`).
+3. **One branch per feature/unit of work.** Do not reuse an old branch for new work.
+4. **All pulls and pushes are done on the feature branch** — never push directly to
+   `main` and never work on `main`.
+5. **Never delete branches.** Every branch is kept so any feature/iteration can be
+   recovered.
+6. Never force-push and never rewrite history on `main` or shared branches.
 
 ## After EVERY Iteration — Commit & Push Checklist
 
@@ -54,6 +57,13 @@ This repository uses a **branch-per-iteration** workflow:
 
 ## Starting New Work
 
-1. Ensure you are on the latest baseline: `git checkout main`.
+1. Ensure you are on the latest baseline: `git checkout main`, then `git pull origin main`.
 2. Create your new branch: `git checkout -b feature/<short-description>`.
 3. Do the work, then follow the Commit & Push Checklist above before finishing.
+
+## Environment
+
+- Database credentials are read from `.env` at the project root (see `.env.example`
+  for the format). `.env` is **gitignored — never commit or push it**.
+- `config.php` loads `.env` and falls back to localhost defaults when the file is
+  missing.

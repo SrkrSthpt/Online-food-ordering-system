@@ -6,10 +6,12 @@
  * Delete this file after successful import.
  */
 
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$dbname = 'bitezy';
+require_once __DIR__ . '/../config.php';
+
+$host = DB_HOST;
+$user = DB_USER;
+$pass = DB_PASS;
+$dbname = DB_NAME;
 
 try {
   $conn = new mysqli($host, $user, $pass);
