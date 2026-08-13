@@ -9,12 +9,13 @@
 require_once __DIR__ . '/../config.php';
 
 $host = DB_HOST;
+$port = defined('DB_PORT') ? (int)DB_PORT : 3306;
 $user = DB_USER;
 $pass = DB_PASS;
 $dbname = DB_NAME;
 
 try {
-  $conn = new mysqli($host, $user, $pass);
+  $conn = new mysqli($host, $user, $pass, '', $port);
   if ($conn->connect_error) {
     die('Connection failed: ' . $conn->connect_error);
   }

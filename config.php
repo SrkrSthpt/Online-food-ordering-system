@@ -20,16 +20,17 @@ function loadEnv($path) {
 
 loadEnv(__DIR__ . '/.env');
 
-define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
-define('DB_USER', getenv('DB_USER') ?: 'root');
-define('DB_PASS', getenv('DB_PASS') ?: '');
-define('DB_NAME', getenv('DB_NAME') ?: 'bitezy');
+define('DB_HOST', getenv('DB_HOST') ?: '127.0.0.1');
+define('DB_PORT', getenv('DB_PORT') ?: '3306');
+define('DB_USER', getenv('DB_USERNAME') ?: (getenv('DB_USER') ?: 'root'));
+define('DB_PASS', getenv('DB_PASSWORD') ?: (getenv('DB_PASS') ?: ''));
+define('DB_NAME', getenv('DB_DATABASE') ?: (getenv('DB_NAME') ?: 'bitezy'));
 
-define('SITE_NAME', 'Bitezy');
-define('SITE_URL', 'http://localhost/bitezy');
+define('SITE_NAME', getenv('APP_NAME') ?: 'Bitezy');
+define('SITE_URL', getenv('APP_URL') ?: 'http://localhost/bitezy');
 
-define('CURRENCY', 'rs. ');
-define('DELIVERY_FEE', 99);
+define('CURRENCY', getenv('APP_CURRENCY_SYMBOL') ?: 'rs. ');
+define('DELIVERY_FEE', getenv('DELIVERY_FEE') ?: 99);
 
 define('PAYPAL_CLIENT_ID', 'YOUR_PAYPAL_CLIENT_ID');
 define('PAYPAL_SECRET', 'YOUR_PAYPAL_SECRET');
