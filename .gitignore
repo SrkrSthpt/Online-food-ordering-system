@@ -20,3 +20,6 @@ Desktop.ini
 # IDE
 .vscode/
 .idea/
+
+# Composer phar
+composer.phar

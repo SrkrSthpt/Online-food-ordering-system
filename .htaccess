@@ -1,14 +1,32 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
+# ------------------------------------------------------------------
+# Foodly - Root .htaccess
+# Routes all requests through the public/ front controller via mod_rewrite
+# ------------------------------------------------------------------
+<IfModule mod_rewrite.c>
+    RewriteEngine On
 
-<IfModule mod_headers.c>
-  Header set X-Content-Type-Options "nosniff"
-  Header set X-Frame-Options "DENY"
-  Header set X-XSS-Protection "1; mode=block"
+    # Prevent direct access to app code, config, storage, docs
+    RewriteRule ^app(/|$) - [F,L]
+    RewriteRule ^config(/|$) - [F,L]
+    RewriteRule ^storage(/|$) - [F,L]
+    RewriteRule ^database(/|$) - [F,L]
+    RewriteRule ^routes(/|$) - [F,L]
+    RewriteRule ^tests(/|$) - [F,L]
+    RewriteRule ^vendor(/|$) - [F,L]
+
+    # Redirect all traffic to the public directory
+    RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
 
-<FilesMatch "\.(sql|md)$">
-  Deny from all
+# Block sensitive files
+<FilesMatch "^(\.env|\.gitignore|composer\.json|composer\.lock)$">
+    Require all denied
 </FilesMatch>
+
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+Options -Indexes
