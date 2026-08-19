@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<ruleset name="Foodly Coding Standard">
+    <description>PSR-12 based ruleset for the Foodly codebase.</description>
+
+    <arg value="p"/>
+    <arg name="colors"/>
+    <arg name="basepath" value="."/>
+    <arg name="extensions" value="php"/>
+
+    <!-- PSR-12 base -->
+    <rule ref="PSR12"/>
+
+    <!-- Extra hardening -->
+    <rule ref="Generic.PHP.NoSilencedErrors"/>
+    <rule ref="Generic.Formatting.SpaceAfterCast">
+        <properties>
+            <property name="spacing" value="0"/>
+        </properties>
+    </rule>
+
+    <!-- Folders to lint -->
+    <file>app</file>
+    <file>routes</file>
+    <file>database/seeders</file>
+    <file>database/migrations</file>
+    <file>tests</file>
+
+    <exclude-pattern>*/storage/*</exclude-pattern>
+    <exclude-pattern>*/vendor/*</exclude-pattern>
+</ruleset>

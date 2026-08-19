@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function() {
   initProgressBars();
   initPills();
   initFlash();
+  initEtaCountdowns();
 });
 
 function initNavbar() {
@@ -328,18 +329,15 @@ function placeOrder() {
     });
 }
 
-function confirmPayment(orderId) {
+function confirmPayment(orderId, method) {
   const btn = document.getElementById('pay-btn');
   if (!btn) return;
   btn.disabled = true;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
-  const method = document.querySelector('.payment-method.active');
-  const paymentMethod = method ? method.dataset.method : 'paypal';
-
   const formData = new FormData();
   formData.append('order_id', orderId);
-  formData.append('method', paymentMethod);
+  formData.append('method', method || 'cod');
 
   api('/api/payments/process', { method: 'POST', body: formData })
   .then(r => r.json())
@@ -380,4 +378,150 @@ function deleteItem(type, id) {
     }
   })
   .catch(() => showToast('Network error', 'error'));
+}
+
+/* ------------------------------------------------------------------ */
+/* Delivery dashboard                                                 */
+/* ------------------------------------------------------------------ */
+
+function acceptDelivery(orderId) {
+  const formData = new FormData();
+  formData.append('order_id', orderId);
+  api('/api/delivery/orders/' + orderId + '/accept', { method: 'POST', body: formData })
+    .then(r => r.json())
+    .then(data => {
+      showToast(data.message || 'Order accepted.', data.success ? 'success' : 'error');
+      if (data.success) setTimeout(() => location.reload(), 600);
+    })
+    .catch(() => showToast('Network error', 'error'));
+}
+
+function deliveryStatus(orderId, status) {
+  const formData = new FormData();
+  formData.append('status', status);
+  api('/api/delivery/orders/' + orderId + '/status', { method: 'POST', body: formData })
+    .then(r => r.json())
+    .then(data => {
+      showToast(data.message || 'Updated.', data.success ? 'success' : 'error');
+      if (data.success) setTimeout(() => location.reload(), 600);
+    })
+    .catch(() => showToast('Network error', 'error'));
+}
+
+function updateEta(orderId) {
+  const input = document.getElementById('eta-' + orderId);
+  const minutes = input ? parseInt(input.value, 10) : 30;
+  if (!minutes || minutes < 1) return showToast('Enter a valid ETA in minutes.', 'error');
+
+  const formData = new FormData();
+  formData.append('minutes', minutes);
+  api('/api/delivery/orders/' + orderId + '/eta', { method: 'POST', body: formData })
+    .then(r => r.json())
+    .then(data => {
+      showToast(data.message || 'ETA updated.', data.success ? 'success' : 'error');
+      if (data.success) setTimeout(() => location.reload(), 600);
+    })
+    .catch(() => showToast('Network error', 'error'));
+}
+
+/* ------------------------------------------------------------------ */
+/* Customer tracking (live poll + ETA countdown)                      */
+/* ------------------------------------------------------------------ */
+
+const TRACK_STEPS = [
+  'pending', 'accepted', 'preparing', 'prepared', 'out_for_delivery', 'delivered'
+];
+const TRACK_LABELS = {
+  pending: 'Order Placed', accepted: 'Accepted', preparing: 'Preparing',
+  prepared: 'Ready for Delivery', out_for_delivery: 'On the Way', delivered: 'Delivered'
+};
+const TRACK_ICONS = {
+  pending: 'fa-clipboard-list', accepted: 'fa-store', preparing: 'fa-fire',
+  prepared: 'fa-utensils', out_for_delivery: 'fa-motorcycle', delivered: 'fa-check-double'
+};
+
+function pollOrder(card) {
+  const id = card.dataset.orderId;
+  fetch('/api/orders/' + id + '/track')
+    .then(r => r.json())
+    .then(data => {
+      if (!data.success) return;
+      renderTrackStatus(card, data);
+    })
+    .catch(() => {});
+}
+
+function renderTrackStatus(card, data) {
+  const status = data.status || 'pending';
+  const stepIndex = TRACK_STEPS.indexOf(status);
+
+  card.dataset.status = status;
+
+  const label = card.querySelector('.status-label');
+  if (label) label.textContent = TRACK_LABELS[status] || status;
+  if (label) label.className = 'order-status status-label status-' + status;
+
+  card.querySelectorAll('.progress-step').forEach((step, idx) => {
+    step.classList.toggle('completed', idx < stepIndex);
+    step.classList.toggle('active', idx === stepIndex);
+  });
+
+  if (data.delivery_name) {
+    let dEl = card.querySelector('.delivery-name');
+    if (!dEl) {
+      const meta = card.querySelector('.order-meta');
+      if (meta) {
+        dEl = document.createElement('span');
+        dEl.className = 'delivery-name';
+        meta.appendChild(dEl);
+      }
+    }
+    if (dEl) dEl.innerHTML = '<i class="fas fa-motorcycle"></i> ' + data.delivery_name;
+  }
+
+  const etaEl = card.querySelector('.eta-label');
+  if (etaEl) {
+    if (data.eta) {
+      etaEl.dataset.eta = data.eta;
+      etaEl.querySelector('strong').textContent = new Date(data.eta.replace(' ', 'T')).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    } else {
+      etaEl.remove();
+    }
+  }
+
+  const timeline = card.querySelector('.order-timeline');
+  if (timeline && data.timeline && data.timeline.length) {
+    timeline.innerHTML = '<h4 style="margin-bottom:10px;"><i class="fas fa-history"></i> Timeline</h4>' +
+      data.timeline.map(function(e) {
+        return '<div class="timeline-row">' +
+          '<i class="fas ' + (TRACK_ICONS[e.status] || 'fa-circle') + '"></i>' +
+          '<span class="timeline-status">' + (TRACK_LABELS[e.status] || e.status) + '</span>' +
+          '<span class="timeline-time">' + formatTime(e.created_at) + '</span>' +
+        '</div>';
+      }).join('');
+  }
+}
+
+function formatTime(value) {
+  const d = new Date(String(value).replace(' ', 'T'));
+  if (isNaN(d)) return value;
+  return d.toLocaleDateString([], { month: 'short', day: 'numeric' }) + ', ' +
+    d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+function initEtaCountdowns() {
+  setInterval(function() {
+    document.querySelectorAll('.eta-label[data-eta]').forEach(function(el) {
+      const eta = new Date(el.dataset.eta.replace(' ', 'T'));
+      if (isNaN(eta)) return;
+      const mins = Math.max(0, Math.round((eta.getTime() - Date.now()) / 60000));
+      let note = el.querySelector('.eta-countdown');
+      if (!note) {
+        note = document.createElement('span');
+        note.className = 'eta-countdown';
+        el.appendChild(note);
+      }
+      note.textContent = ' (' + (mins <= 0 ? 'arriving' : '~' + mins + ' min') + ')';
+    });
+  }, 1000);
 }

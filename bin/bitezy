@@ -1,0 +1,53 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Bitezy CLI entry point.
+ *
+ * Usage:
+ *   php bin/bitezy key:generate
+ *   php bin/bitezy db:migrate [--env=testing]
+ *   php bin/bitezy db:seed [--env=testing]
+ *   php bin/bitezy db:refresh
+ *   php bin/bitezy cache:clear
+ */
+
+$root = dirname(__DIR__);
+
+if (PHP_VERSION_ID < 80200) {
+    fwrite(STDERR, sprintf("Bitezy requires PHP 8.2+, found %s\n", PHP_VERSION));
+    exit(1);
+}
+
+require $root . '/vendor/autoload.php';
+
+use App\Core\Application;
+
+/**
+ * Apply a CLI environment override (e.g. --env=testing) before the
+ * application boots, so config is resolved against the right environment.
+ */
+foreach (array_slice($argv, 2) as $arg) {
+    if (str_starts_with($arg, '--env=')) {
+        $env = substr($arg, 6);
+        putenv('APP_ENV=' . $env);
+        if ($env === 'testing') {
+            putenv('DB_DATABASE=bitezy_test');
+        }
+        break;
+    }
+}
+
+try {
+    $app = Application::create($root);
+    $app->bootstrapConsole();
+
+    $command = $argv[1] ?? 'help';
+
+    $app->console()->run($command, array_slice($argv, 2));
+} catch (Throwable $e) {
+    fwrite(STDERR, '[' . get_class($e) . '] ' . $e->getMessage() . PHP_EOL);
+    exit(1);
+}

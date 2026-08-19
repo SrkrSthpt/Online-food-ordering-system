@@ -1,0 +1,51 @@
+{
+    "name": "bitezy/bitezy",
+    "description": "Bitezy - an online food ordering platform built with PHP 8, vanilla JavaScript and MySQL.",
+    "type": "project",
+    "keywords": ["food", "ordering", "php", "mvc", "restaurant"],
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "ext-pdo": "*",
+        "ext-pdo_mysql": "*",
+        "ext-mbstring": "*",
+        "ext-openssl": "*",
+        "ext-json": "*",
+        "ext-session": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5 || ^11.0",
+        "squizlabs/php_codesniffer": "^3.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/"
+        },
+        "files": [
+            "app/Helpers/helpers.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "config": {
+        "sort-packages": true,
+        "optimize-autoloader": true,
+        "preferred-install": "dist"
+    },
+    "scripts": {
+        "serve": "php -S localhost:8080 -t public",
+        "lint": "phpcs --standard=phpcs.xml",
+        "fix": "phpcbf --standard=phpcs.xml",
+        "test": "phpunit --testdox",
+        "db:migrate": "php bin/bitezy db:migrate",
+        "db:seed": "php bin/bitezy db:seed",
+        "db:refresh": "php bin/bitezy db:refresh",
+        "key:generate": "php bin/bitezy key:generate",
+        "cache:clear": "php bin/bitezy cache:clear"
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
