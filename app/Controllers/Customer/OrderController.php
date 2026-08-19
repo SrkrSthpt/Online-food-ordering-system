@@ -29,9 +29,9 @@ final class OrderController extends Controller
             if ($order === null) {
                 continue;
             }
-            $keys = ['payment_method', 'transaction_id', 'payment_status', 'restaurant_name', 'delivery_name'];
+            $keys = ['method', 'transaction_id', 'payment_status', 'restaurant_name', 'delivery_name'];
             foreach ($keys as $key) {
-                $order->{$key} = $row[$key] ?? '';
+                $order->{$key === 'method' ? 'payment_method' : $key} = $row[$key] ?? '';
             }
             $order->timeline = $this->orders->statusTimeline((int)$order->id);
             $orders[] = $order;

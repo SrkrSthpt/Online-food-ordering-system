@@ -22,6 +22,7 @@ if ($isDelivery) {
         $nav['users'] = ['Users', route('admin.users.index')];
     }
 }
+$showOrderAlerts = !$isDelivery;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,6 +50,9 @@ if ($isDelivery) {
             'users' => 'fa-users',
             default => 'fa-circle',
                       } ?>"></i> <?= e($label) ?>
+        <?php if ($showOrderAlerts && $key === 'orders') : ?>
+          <span class="nav-badge" id="pendingOrdersBadge" style="display:none;">0</span>
+        <?php endif; ?>
       </a>
     <?php endforeach; ?>
     <a href="<?= e(url('/')) ?>"><i class="fas fa-arrow-left"></i> Back to Site</a>
@@ -69,5 +73,15 @@ if ($isDelivery) {
 </div>
 
 <script src="<?= e(asset('js/script.js')) ?>"></script>
+<?php if ($showOrderAlerts) : ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  if (typeof pollAdminOrders === 'function') {
+    pollAdminOrders();
+    setInterval(pollAdminOrders, 15000);
+  }
+});
+</script>
+<?php endif; ?>
 </body>
 </html>

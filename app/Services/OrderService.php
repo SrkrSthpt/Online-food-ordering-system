@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderStatusLog;
 use App\Models\Payment;
+use App\Models\User;
 use RuntimeException;
 
 /**
@@ -279,6 +280,38 @@ final class OrderService
              LEFT JOIN payments p ON p.order_id = o.id
              ORDER BY o.created_at DESC'
         );
+    }
+
+    /**
+     * Orders still waiting for the hotel to accept. Admins see every
+     * restaurant; a manager only sees their own.
+     *
+     * @return array<int, array<string, mixed>>
+     */
+    public function newOrdersForUser(int $userId): array
+    {
+        $user = User::find($userId);
+        if ($user === null) {
+            return [];
+        }
+
+        $sql = 'SELECT o.*, u.name AS user_name, r.name AS restaurant_name,
+                       p.status AS payment_status
+                FROM orders o
+                JOIN users u ON u.id = o.user_id
+                LEFT JOIN restaurants r ON r.id = o.restaurant_id
+                LEFT JOIN payments p ON p.order_id = o.id
+                WHERE o.status = ?';
+        $params = ['pending'];
+
+        $restaurantId = (int)($user->restaurant_id ?? 0);
+        if (!$user->isAdmin() && $restaurantId > 0) {
+            $sql .= ' AND o.restaurant_id = ?';
+            $params[] = $restaurantId;
+        }
+        $sql .= ' ORDER BY o.created_at DESC';
+
+        return Database::connect()->query($sql, $params);
     }
 
     /**

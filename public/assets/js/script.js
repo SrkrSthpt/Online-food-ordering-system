@@ -525,3 +525,24 @@ function initEtaCountdowns() {
     });
   }, 1000);
 }
+
+/* ------------------------------------------------------------------ */
+/* Hotel new-order notification (sidebar badge + toast)               */
+/* ------------------------------------------------------------------ */
+
+function pollAdminOrders() {
+  fetch('/admin/orders/notifications', { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+    .then(function(r) { return r.json(); })
+    .then(function(data) {
+      if (!data || !data.success) return;
+      const badge = document.getElementById('pendingOrdersBadge');
+      if (badge) {
+        badge.textContent = data.count;
+        badge.style.display = data.count > 0 ? 'inline-block' : 'none';
+      }
+      if (data.new_count > 0) {
+        showToast(data.new_count + ' new order' + (data.new_count === 1 ? '' : 's') + ' received!', 'success');
+      }
+    })
+    .catch(function() {});
+}

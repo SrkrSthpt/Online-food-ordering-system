@@ -75,4 +75,26 @@ final class OrderController extends Controller
 
         return $this->redirect('/admin/orders');
     }
+
+    /**
+     * Live "new order" indicator for the hotel sidebar badge. Returns how many
+     * pending orders there are for this user and how many arrived since the
+     * last poll so the frontend can toast "new order received".
+     */
+    public function notifications(): Response
+    {
+        $pending = $this->orders->newOrdersForUser((int)auth()->id());
+        $count = count($pending);
+
+        $previous = (int)Session::get('_pending_order_count', -1);
+        Session::put('_pending_order_count', $count);
+        $newCount = $previous >= 0 && $count > $previous ? $count - $previous : 0;
+
+        return $this->json([
+            'success' => true,
+            'count' => $count,
+            'new_count' => $newCount,
+            'ids' => array_map('intval', array_column($pending, 'id')),
+        ]);
+    }
 }

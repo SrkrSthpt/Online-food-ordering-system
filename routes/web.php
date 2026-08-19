@@ -56,6 +56,7 @@ Route::prefix('admin')->middleware('manager')->group(function (): void {
     Route::post('/menu-items/update', [Admin\MenuItemController::class, 'update'])->name('admin.menu-items.update');
 
     Route::get('/orders', [Admin\OrderController::class, 'index'])->name('admin.orders.index');
+    Route::get('/orders/notifications', [Admin\OrderController::class, 'notifications'])->name('admin.orders.notifications');
     Route::post('/orders/update', [Admin\OrderController::class, 'update'])->name('admin.orders.update');
 
     Route::get('/users', [Admin\UserController::class, 'index'])->middleware('admin')->name('admin.users.index');

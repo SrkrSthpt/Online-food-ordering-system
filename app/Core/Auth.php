@@ -115,4 +115,9 @@ final class Auth
     {
         return $this->isRole('customer');
     }
+
+    public function isDelivery(): bool
+    {
+        return $this->isRole('delivery');
+    }
 }

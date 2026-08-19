@@ -8,7 +8,15 @@ $statusLabels = [
     'out_for_delivery' => 'On the Way',
     'delivered' => 'Delivered',
 ];
+$pendingCount = count(array_filter($orders, static fn (array $o): bool => (string)($o['status'] ?? '') === 'pending'));
 ?>
+<?php if ($pendingCount > 0) : ?>
+  <div class="alert-banner">
+    <i class="fas fa-bell"></i>
+    <strong><?= (int)$pendingCount ?></strong> new order<?= $pendingCount === 1 ? '' : 's' ?> waiting to be accepted.
+    <a href="<?= e(route('admin.orders.index')) ?>">Refresh</a>
+  </div>
+<?php endif; ?>
 <div class="table-container">
   <div class="table-wrapper">
     <table>
@@ -30,7 +38,7 @@ $statusLabels = [
               $status = (string)($o['status'] ?? 'pending');
               $next = (string)($o['next_status'] ?? '');
             ?>
-        <tr>
+        <tr class="<?= $status === 'pending' ? 'row-pending' : '' ?>">
           <td><strong>#<?= (int)$o['id'] ?></strong></td>
           <td><?= e((string)($o['user_name'] ?? '')) ?></td>
           <td><?= e((string)($o['restaurant_name'] ?? '—')) ?></td>
