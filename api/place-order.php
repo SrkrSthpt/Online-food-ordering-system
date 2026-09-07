@@ -3,7 +3,7 @@ require_once __DIR__ . '/../includes/db.php';
 header('Content-Type: application/json');
 
 if (!isAuthenticated()) {
-  echo json_encode(['success' => false, 'message' => 'Please login first', 'redirect' => '/bitezy/pages/login.php']);
+  echo json_encode(['success' => false, 'message' => 'Please login first', 'redirect' => SITE_URL . '/pages/login.php']);
   exit;
 }
 
@@ -41,4 +41,4 @@ foreach ($items as $it) {
 
 $_SESSION['cart'] = [];
 
-echo json_encode(['success' => true, 'message' => 'Order placed!', 'order_id' => $orderId, 'redirect' => '/bitezy/pages/payment.php?order_id=' . $orderId]);
+echo json_encode(['success' => true, 'message' => 'Order placed!', 'order_id' => $orderId, 'redirect' => SITE_URL . '/pages/payment.php?order_id=' . $orderId]);

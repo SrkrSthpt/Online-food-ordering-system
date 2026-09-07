@@ -40,5 +40,5 @@ echo json_encode([
   'success' => true,
   'message' => 'Payment successful!',
   'transaction_id' => $txnId,
-  'redirect' => '/bitezy/pages/order-tracking.php'
+  'redirect' => SITE_URL . '/pages/order-tracking.php'
 ]);

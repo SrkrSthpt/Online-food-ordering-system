@@ -38,9 +38,9 @@ if (!$restaurant) {
     <p>Choose a restaurant to view its menu</p>
   </div>
   <div class="category-pills">
-    <button class="pill active" onclick="window.location.href='/bitezy/pages/menu.php'">All</button>
+    <button class="pill active" onclick="window.location.href='<?php echo SITE_URL; ?>/pages/menu.php'">All</button>
     <?php foreach ($allRestaurantsList as $r): ?>
-      <button class="pill" onclick="window.location.href='/bitezy/pages/menu.php?restaurant=<?php echo $r['id']; ?>'">
+      <button class="pill" onclick="window.location.href='<?php echo SITE_URL; ?>/pages/menu.php?restaurant=<?php echo $r['id']; ?>'">
         <?php echo htmlspecialchars($r['name']); ?>
       </button>
     <?php endforeach; ?>
@@ -55,7 +55,7 @@ if (!$restaurant) {
   <?php if ($restaurant): ?>
     <div style="margin-bottom:24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
       <h2 style="font-size:1.5rem;">Menu Items</h2>
-      <a href="/bitezy/pages/menu.php" class="btn btn-outline" style="padding:8px 20px;font-size:0.85rem;">
+      <a href="<?php echo SITE_URL; ?>/pages/menu.php" class="btn btn-outline" style="padding:8px 20px;font-size:0.85rem;">
         <i class="fas fa-arrow-left"></i> All Restaurants
       </a>
     </div>

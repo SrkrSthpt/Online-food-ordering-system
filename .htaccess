@@ -1,14 +1,20 @@
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
-
-<IfModule mod_headers.c>
-  Header set X-Content-Type-Options "nosniff"
-  Header set X-Frame-Options "DENY"
-  Header set X-XSS-Protection "1; mode=block"
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^api(/|$) - [F,L]
+    RewriteRule ^admin(/|$) - [F,L]
+    RewriteRule ^includes(/|$) - [F,L]
+    RewriteRule ^database(/|$) - [F,L]
+    RewriteRule ^config\.php$ - [F,L]
 </IfModule>
 
-<FilesMatch "\.(sql|md)$">
-  Deny from all
+<FilesMatch "^(\.env|\.gitignore)$">
+    Require all denied
 </FilesMatch>
+
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
+Options -Indexes

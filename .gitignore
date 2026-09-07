@@ -1,0 +1,21 @@
+# Environment / secrets
+.env
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Logs
+*.log
+
+# Temp / cache
+*.tmp
+*.cache
+
+# IDE
+.vscode/
+.idea/
+
+# Vendor (not needed for XAMPP)
+vendor/
