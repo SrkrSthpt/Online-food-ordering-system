@@ -18,13 +18,12 @@ if ($qty === 0) {
 
 if (isset($_SESSION['cart'][$itemId])) {
   $_SESSION['cart'][$itemId] = $qty;
-  $item = new stdClass();
-  $item->price = 10;
   $result = dbQuery("SELECT price FROM menu_items WHERE id = ?", [$itemId]);
+  $price = 0;
   if ($result && $row = $result->fetch_assoc()) {
-    $item->price = $row['price'];
+    $price = $row['price'];
   }
-  echo json_encode(['success' => true, 'item_total' => $item->price * $qty]);
+  echo json_encode(['success' => true, 'item_total' => $price * $qty]);
   exit;
 }
 

@@ -1,3 +1,4 @@
+const BASE_URL = window.location.origin + '/bitezy';
 const CURRENCY = 'rs. ';
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -57,7 +58,7 @@ function updateCartCount() {
   const badge = document.getElementById('cart-count');
   if (!badge) return;
 
-  fetch('/bitezy/api/get-cart-count.php')
+  fetch(BASE_URL + '/api/get-cart-count.php')
     .then(r => r.json())
     .then(data => {
       badge.textContent = data.count || 0;
@@ -71,7 +72,7 @@ function addToCart(itemId, button) {
   formData.append('item_id', itemId);
   formData.append('quantity', 1);
 
-  fetch('/bitezy/api/add-to-cart.php', {
+  fetch(BASE_URL + '/api/add-to-cart.php', {
     method: 'POST',
     body: formData
   })
@@ -111,7 +112,7 @@ function updateCartItem(itemId, change) {
   formData.append('item_id', itemId);
   formData.append('quantity', qty);
 
-  fetch('/bitezy/api/update-cart.php', {
+  fetch(BASE_URL + '/api/update-cart.php', {
     method: 'POST',
     body: formData
   })
@@ -139,7 +140,7 @@ function removeCartItem(itemId) {
     setTimeout(() => {
       const formData = new FormData();
       formData.append('item_id', itemId);
-      fetch('/bitezy/api/remove-from-cart.php', { method: 'POST', body: formData })
+      fetch(BASE_URL + '/api/remove-from-cart.php', { method: 'POST', body: formData })
         .then(r => r.json())
         .then(data => {
           if (data.success) {
@@ -184,7 +185,7 @@ function checkCartEmpty() {
         <i class="fas fa-shopping-cart"></i>
         <h3>Your cart is empty</h3>
         <p>Looks like you haven't added anything yet.</p>
-        <a href="/bitezy/pages/menu.php" class="btn btn-primary" style="margin-top:20px">Browse Menu</a>
+        <a href="${BASE_URL}/pages/menu.php" class="btn btn-primary" style="margin-top:20px">Browse Menu</a>
       </div>`;
   }
 }
@@ -300,13 +301,13 @@ function placeOrder() {
   btn.disabled = true;
   btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
 
-  fetch('/bitezy/api/place-order.php', { method: 'POST' })
+  fetch(BASE_URL + '/api/place-order.php', { method: 'POST' })
     .then(r => r.json())
     .then(data => {
       if (data.success) {
         showToast('Order placed successfully!', 'success');
         setTimeout(() => {
-          window.location.href = data.redirect || '/bitezy/pages/payment.php?order_id=' + data.order_id;
+          window.location.href = data.redirect || (BASE_URL + '/pages/payment.php?order_id=' + data.order_id);
         }, 1000);
       } else {
         showToast(data.message || 'Failed to place order', 'error');
@@ -334,7 +335,7 @@ function confirmPayment(orderId) {
   formData.append('order_id', orderId);
   formData.append('method', paymentMethod);
 
-  fetch('/bitezy/api/process-payment.php', {
+  fetch(BASE_URL + '/api/process-payment.php', {
     method: 'POST',
     body: formData
   })
@@ -343,7 +344,7 @@ function confirmPayment(orderId) {
     if (data.success) {
       showToast('Payment successful!', 'success');
       setTimeout(() => {
-        window.location.href = data.redirect || '/bitezy/pages/order-tracking.php';
+        window.location.href = data.redirect || (BASE_URL + '/pages/order-tracking.php');
       }, 1000);
     } else {
       showToast(data.message || 'Payment failed', 'error');
@@ -365,7 +366,7 @@ function deleteItem(type, id) {
   formData.append('id', id);
   formData.append('type', type);
 
-  fetch('/bitezy/api/delete-item.php', {
+  fetch(BASE_URL + '/api/delete-item.php', {
     method: 'POST',
     body: formData
   })

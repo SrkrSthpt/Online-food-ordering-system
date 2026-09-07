@@ -1,25 +1,13 @@
-# ------------------------------------------------------------------
-# Foodly - Root .htaccess
-# Routes all requests through the public/ front controller via mod_rewrite
-# ------------------------------------------------------------------
 <IfModule mod_rewrite.c>
     RewriteEngine On
-
-    # Prevent direct access to app code, config, storage, docs
-    RewriteRule ^app(/|$) - [F,L]
-    RewriteRule ^config(/|$) - [F,L]
-    RewriteRule ^storage(/|$) - [F,L]
+    RewriteRule ^api(/|$) - [F,L]
+    RewriteRule ^admin(/|$) - [F,L]
+    RewriteRule ^includes(/|$) - [F,L]
     RewriteRule ^database(/|$) - [F,L]
-    RewriteRule ^routes(/|$) - [F,L]
-    RewriteRule ^tests(/|$) - [F,L]
-    RewriteRule ^vendor(/|$) - [F,L]
-
-    # Redirect all traffic to the public directory
-    RewriteRule ^(.*)$ public/$1 [L]
+    RewriteRule ^config\.php$ - [F,L]
 </IfModule>
 
-# Block sensitive files
-<FilesMatch "^(\.env|\.gitignore|composer\.json|composer\.lock)$">
+<FilesMatch "^(\.env|\.gitignore)$">
     Require all denied
 </FilesMatch>
 

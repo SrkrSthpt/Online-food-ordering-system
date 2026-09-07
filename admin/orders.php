@@ -21,7 +21,7 @@ include __DIR__ . '/../includes/header.php';
     <a href="restaurants.php"><i class="fas fa-store"></i> Restaurants</a>
     <a href="menu-items.php"><i class="fas fa-utensils"></i> Menu Items</a>
     <a href="orders.php" class="active"><i class="fas fa-truck"></i> Orders</a>
-    <a href="/bitezy/index.php"><i class="fas fa-arrow-left"></i> Back to Site</a>
+    <a href="<?php echo SITE_URL; ?>/index.php"><i class="fas fa-arrow-left"></i> Back to Site</a>
   </div>
 
   <div class="admin-content">

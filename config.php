@@ -32,10 +32,6 @@ define('SITE_URL', getenv('APP_URL') ?: 'http://localhost/bitezy');
 define('CURRENCY', getenv('APP_CURRENCY_SYMBOL') ?: 'rs. ');
 define('DELIVERY_FEE', getenv('DELIVERY_FEE') ?: 99);
 
-define('PAYPAL_CLIENT_ID', 'YOUR_PAYPAL_CLIENT_ID');
-define('PAYPAL_SECRET', 'YOUR_PAYPAL_SECRET');
-define('PAYPAL_MODE', 'sandbox');
-
 error_reporting(E_ALL);
 ini_set('display_errors', 0);
 

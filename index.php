@@ -13,7 +13,7 @@
     <p>Order from the best restaurants near you. Fresh food, fast delivery, great taste.</p>
     <div class="hero-search">
       <input type="text" id="searchInput" placeholder="Search for restaurants or dishes..." onkeyup="filterBySearch(event)">
-      <button onclick="window.location.href='/bitezy/pages/menu.php'"><i class="fas fa-search"></i> Search</button>
+      <button onclick="window.location.href='<?php echo SITE_URL; ?>/pages/menu.php'"><i class="fas fa-search"></i> Search</button>
     </div>
   </div>
 </section>
@@ -59,7 +59,7 @@
             ? $r['image_url']
             : 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600';
           ?>
-          <div class="restaurant-card" onclick="window.location.href='/bitezy/pages/menu.php?restaurant=<?php echo $r['id']; ?>'">
+          <div class="restaurant-card" onclick="window.location.href='<?php echo SITE_URL; ?>/pages/menu.php?restaurant=<?php echo $r['id']; ?>'">
             <div class="restaurant-card-img" style="background-image: url('<?php echo $img; ?>')">
               <div class="overlay"></div>
               <div class="rating"><i class="fas fa-star"></i> 4.5</div>
@@ -68,7 +68,7 @@
               <h3><?php echo htmlspecialchars($r['name']); ?></h3>
               <p><i class="fas fa-map-marker-alt"></i> <?php echo htmlspecialchars($r['location']); ?></p>
               <p style="color: var(--gray); font-size:0.8rem;"><i class="fas fa-utensils"></i> <?php echo $count; ?> items</p>
-              <a href="/bitezy/pages/menu.php?restaurant=<?php echo $r['id']; ?>" class="btn">View Menu <i class="fas fa-arrow-right"></i></a>
+              <a href="<?php echo SITE_URL; ?>/pages/menu.php?restaurant=<?php echo $r['id']; ?>" class="btn">View Menu <i class="fas fa-arrow-right"></i></a>
             </div>
           </div>
           <?php

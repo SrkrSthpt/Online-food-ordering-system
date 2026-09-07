@@ -1,10 +1,6 @@
 # Environment / secrets
 .env
 
-# Markdown docs (AGENTS.md is kept tracked)
-*.md
-!AGENTS.md
-
 # OS files
 Thumbs.db
 Desktop.ini
@@ -21,5 +17,5 @@ Desktop.ini
 .vscode/
 .idea/
 
-# Composer phar
-composer.phar
+# Vendor (not needed for XAMPP)
+vendor/

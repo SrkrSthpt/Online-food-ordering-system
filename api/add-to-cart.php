@@ -3,7 +3,7 @@ require_once __DIR__ . '/../includes/db.php';
 header('Content-Type: application/json');
 
 if (!isAuthenticated()) {
-  echo json_encode(['success' => false, 'message' => 'Please login first', 'redirect' => '/bitezy/pages/login.php']);
+  echo json_encode(['success' => false, 'message' => 'Please login first', 'redirect' => SITE_URL . '/pages/login.php']);
   exit;
 }
 
