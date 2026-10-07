@@ -84,7 +84,7 @@ include __DIR__ . '/../includes/header.php';
       <input type="hidden" name="id" id="restaurantId" value="">
       <div class="form-group">
         <label>Restaurant Name</label>
-        <input type="text" name="name" id="restaurantName" required placeholder="e.g. Pizza Paradise">
+        <input type="text" name="name" id="restaurantName" required placeholder="e.g. Momo Hut">
       </div>
       <div class="form-group">
         <label>Location</label>

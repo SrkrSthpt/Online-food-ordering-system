@@ -65,28 +65,28 @@ INSERT INTO users (name, email, password, role) VALUES
 ('Admin User', 'admin@bitezy.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin'),
 ('Manager User', 'manager@bitezy.com', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'manager');
 
--- Demo restaurants
+-- Demo restaurants (Nepali)
 INSERT INTO restaurants (name, location, image_url) VALUES
-('Pizza Paradise', '123 Main Street, Downtown', 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=600'),
-('Burger Barn', '456 Oak Avenue, Midtown', 'https://images.unsplash.com/photo-1466978913421-dad2ebd01d17?w=600'),
-('Sushi World', '789 Elm Boulevard, Uptown', 'https://images.unsplash.com/photo-1579871494447-9811cf80d66c?w=600'),
-('Taco Fiesta', '321 Pine Road, Eastside', 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600'),
-('Pasta Italia', '654 Maple Drive, Westend', 'https://images.unsplash.com/photo-1551183053-bf91a1d81141?w=600');
+('Momo Hut', 'Thamel, Kathmandu', 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/ce/Momo_food.jpg/960px-Momo_food.jpg'),
+('Newari Kitchen', 'Patan, Lalitpur', 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/49/Newari_Khaja_Set_2.jpg/960px-Newari_Khaja_Set_2.jpg'),
+('Himalayan Bhojanalaya', 'New Baneshwor, Kathmandu', 'https://thumb.wikimedia.org/wikipedia/commons/thumb/c/cd/Dal_bhat.jpg/960px-Dal_bhat.jpg'),
+('Thamel Street Food', 'Thamel, Kathmandu', 'https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9a/Buff_Chowmein.jpg/960px-Buff_Chowmein.jpg'),
+('Chiya & Sweets House', 'Bhaktapur Durbar Square, Bhaktapur', 'https://thumb.wikimedia.org/wikipedia/commons/thumb/b/b8/Chiya_Sel_Roti.jpg/960px-Chiya_Sel_Roti.jpg');
 
--- Demo menu items
+-- Demo menu items (Nepali dishes, prices in Nepali Rupees)
 INSERT INTO menu_items (restaurant_id, name, description, price, image_url) VALUES
-(1, 'Margherita Pizza', 'Classic tomato, mozzarella, and basil', 12.99, 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=400'),
-(1, 'Pepperoni Pizza', 'Loaded with pepperoni and mozzarella', 14.99, 'https://images.unsplash.com/photo-1628840042765-356cda07504e?w=400'),
-(1, 'BBQ Chicken Pizza', 'Grilled chicken, BBQ sauce, red onions', 16.99, 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=400'),
-(2, 'Classic Burger', 'Beef patty, lettuce, tomato, special sauce', 10.99, 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400'),
-(2, 'Cheese Burger', 'Double cheese, beef patty, pickles', 12.99, 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400'),
-(2, 'Bacon Burger', 'Crispy bacon, cheddar, BBQ sauce', 14.99, 'https://images.unsplash.com/photo-1551615593-ef5fe247e8f7?w=400'),
-(3, 'California Roll', 'Crab, avocado, cucumber', 8.99, 'https://images.unsplash.com/photo-1579584425555-c3ce17fd4351?w=400'),
-(3, 'Salmon Nigiri', 'Fresh salmon over seasoned rice', 12.99, 'https://images.unsplash.com/photo-1583623025817-d180a2221d0a?w=400'),
-(3, 'Dragon Roll', 'Shrimp tempura, eel sauce, avocado', 14.99, 'https://images.unsplash.com/photo-1617196034796-73dfa7b1fd56?w=400'),
-(4, 'Chicken Taco', 'Grilled chicken, salsa, sour cream', 5.99, 'https://images.unsplash.com/photo-1551504734-5ee1c4a1479b?w=400'),
-(4, 'Beef Burrito', 'Seasoned beef, beans, cheese, rice', 9.99, 'https://images.unsplash.com/photo-1589302168068-964664d93dc0?w=400'),
-(4, 'Nachos Supreme', 'Tortilla chips, cheese, jalapenos, guacamole', 8.99, 'https://images.unsplash.com/photo-1513456852971-30c0b8199d4d?w=400'),
-(5, 'Spaghetti Carbonara', 'Creamy egg sauce, pancetta, parmesan', 13.99, 'https://images.unsplash.com/photo-1612874742237-6526221588e3?w=400'),
-(5, 'Lasagna', 'Layers of pasta, beef ragu, bechamel', 15.99, 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=400'),
-(5, 'Tiramisu', 'Classic Italian coffee dessert', 7.99, 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=400');
+(1, 'Steam Buff Momo', 'Juicy buffalo momo steamed to perfection, served with tomato achar', 250.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/4b/Buff_Momo_1.jpg/960px-Buff_Momo_1.jpg'),
+(1, 'Jhol Momo', 'Momo swimming in spicy sesame-tomato jhol soup', 280.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/de/Jhol_Momo.jpg/960px-Jhol_Momo.jpg'),
+(1, 'Chilli Momo', 'Fried momo tossed in fiery chilli sauce with onions and capsicum', 300.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f0/Chilli_Momo.jpg/960px-Chilli_Momo.jpg'),
+(2, 'Newari Khaja Set', 'Chiura, bhatmas, aloo, tama, achar and grilled meat — the classic Newari platter', 450.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/d7/Newari_Khaja_Set_1.jpg/960px-Newari_Khaja_Set_1.jpg'),
+(2, 'Chatamari', 'Newari rice crepe topped with minced meat, egg and spices', 180.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/e/e9/Meat_Chatamari.jpg/960px-Meat_Chatamari.jpg'),
+(2, 'Bara', 'Savory black lentil pancake, plain or with egg', 150.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/1/16/Bara_%E2%80%93_Traditional_Newari_Lentil_Pancake_of_Nepal.jpg/960px-Bara_%E2%80%93_Traditional_Newari_Lentil_Pancake_of_Nepal.jpg'),
+(3, 'Dal Bhat Tarkari', 'The national meal — steamed rice, lentil soup, seasonal curry, gundruk and achar', 350.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/6/60/Nepali_dal-bhat-tarkari.jpg/960px-Nepali_dal-bhat-tarkari.jpg'),
+(3, 'Gundruk ko Jhol', 'Fermented greens in a light, tangy broth — perfect with rice', 200.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/f/f6/Gundruk_Jhol.jpg/960px-Gundruk_Jhol.jpg'),
+(3, 'Dhido Set', 'Traditional buckwheat dhido with gundruk soup, ghee and pickle', 250.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/aa/Dhido.jpg/960px-Dhido.jpg'),
+(4, 'Veg Chowmein', 'Wok-tossed noodles with fresh vegetables and Nepali spices', 180.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/8c/Veg_Chowmein.jpg/960px-Veg_Chowmein.jpg'),
+(4, 'Chicken Sekuwa', 'Skewered chicken grilled over charcoal with timur and masala', 400.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/4/45/Sekuwa_%28Nepalese_Roasted_Meat%29.jpg/960px-Sekuwa_%28Nepalese_Roasted_Meat%29.jpg'),
+(4, 'Samosa (2 pcs)', 'Crispy fried pastry stuffed with spiced potatoes and peas', 80.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/a/af/Samosa_Nepal.jpg/960px-Samosa_Nepal.jpg'),
+(5, 'Masala Chiya', 'Hot milk tea brewed with ginger, cardamom and masala', 50.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/8/89/Masala_Chiya.jpg/960px-Masala_Chiya.jpg'),
+(5, 'Juju Dhau', 'The famous "King of Curd" from Bhaktapur — creamy, sweet hung curd', 150.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/d/df/Juju_Dhau_1.jpg/960px-Juju_Dhau_1.jpg'),
+(5, 'Sel Roti', 'Ring-shaped sweet rice bread, crisp outside and soft inside', 90.00, 'https://thumb.wikimedia.org/wikipedia/commons/thumb/7/7e/Sel_roti.jpg/960px-Sel_roti.jpg');

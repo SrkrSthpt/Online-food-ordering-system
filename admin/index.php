@@ -84,7 +84,7 @@ include __DIR__ . '/../includes/header.php';
         <h3>Weekly Sales</h3>
         <div style="display:flex;align-items:flex-end;gap:8px;height:200px;padding:20px 0;">
           <?php
-          $maxVal = max(array_column($dailySales, 'total')) ?: 1;
+          $maxVal = max(array_column($dailySales, 'total') ?: [1]) ?: 1;
           foreach ($dailySales as $day):
             $pct = ($day['total'] / $maxVal) * 100;
           ?>
@@ -106,7 +106,7 @@ include __DIR__ . '/../includes/header.php';
         <h3>Monthly Sales (6 Months)</h3>
         <div style="display:flex;align-items:flex-end;gap:8px;height:200px;padding:20px 0;">
           <?php
-          $maxVal = max(array_column($monthlySales, 'total')) ?: 1;
+          $maxVal = max(array_column($monthlySales, 'total') ?: [1]) ?: 1;
           foreach ($monthlySales as $month):
             $pct = ($month['total'] / $maxVal) * 100;
           ?>
